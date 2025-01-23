@@ -1,0 +1,33 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+h1{
+    text-align: center;
+}
+#sketch{
+    width:1000px;
+    height:700px;
+    border:unset;
+    display:flex;
+    flex-wrap:wrap;
+    margin:1rem auto;
+}
+.squareDiv{
+    border:1px solid black;
+}
+.squareDiv:hover{
+    background-color:lightGrey;
+    
+}
+
+#sktchGame{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:80vw;
+    height:90%;
+    border:1px solid black;
+}
