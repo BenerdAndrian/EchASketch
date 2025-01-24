@@ -31,3 +31,35 @@ h1{
     height:90%;
     border:1px solid black;
 }
+li button{
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+}
+li button span{
+    display:inline-block;
+    width:15px;
+    height:15px;
+    border-radius:10px;
+    vertical-align:center;
+    margin-right:5px;
+}
+
+#colorBrush,#modeSketch{
+    display:flex;
+    gap:1rem;
+    margin-left:10px;
+}
+#colorBrush li,#modeSketch li{
+    list-style:none;
+
+}
+#colorBrush li button,#modeSketch li button,#clear{
+    font-size:1rem;
+    padding:0.2rem;
+}
+#clear{
+    margin-right:1rem;
+    cursor:pointer;
+
+}
