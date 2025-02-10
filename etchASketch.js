@@ -1,23 +1,48 @@
 const sketch=document.getElementById("sketch");
 const brush=document.querySelectorAll(".brush");
 const clearBtn=document.getElementById("clear");
-
+const netMode=document.querySelector(".netMode");
 let coloring;
 function modeApply(input){
     sketch.innerHTML="";
     for(let i=0;i<input*input;i++){
         const squareDiv=document.createElement("div");
-        squareDiv.setAttribute("class","squareDiv");
+        if(netMode.textContent==="Net:On"){
+            squareDiv.setAttribute("class","squareDivBorder");
+        }
+        squareDiv.setAttribute("class","squareDiv")
         squareDiv.style.width=`${(1000-2)/input}px`;
-        squareDiv.style.height=`${(700-2)/input}px`;
+        squareDiv.style.height=`${(500-2)/input}px`;
         sketch.appendChild(squareDiv)
     }
-    
+    netModeChanging();
 }
+
+function netModeChanging(){
+    const squarediv=document.querySelectorAll(".squareDiv");
+    netMode.addEventListener("click",()=>{
+        if (netMode.textContent==="Net:On"){
+            netMode.textContent="Net:Off";
+            squarediv.forEach(div=>{
+                div.classList.remove("squareDivBorder");
+            })
+        }else if(netMode.textContent==="Net:Off"){
+            netMode.textContent="Net:On"
+            squarediv.forEach(div=>{
+                div.classList.add("squareDivBorder");
+            })
+        }
+    })
+
+   }
+   
+   
+
 modeApply(16);
 modeChanging();
 clearOut();
 colorBrushChanging();
+
 function colorBrushChanging() {
     let isMouseDown = false; // Tracks whether the mouse is held down
     const squareDivEntities = document.querySelectorAll(".squareDiv");
@@ -90,6 +115,7 @@ function modeChanging(){
         modeApply(numberInput);
         colorBrushChanging();
         clearOut();
+        netModeChanging();
        }
     })
 }
