@@ -25,6 +25,10 @@ body{
     background-color:lightGrey;
     
 }
+input.brush{
+    width:30px;
+    height:20px;
+}
 
 
 li button{

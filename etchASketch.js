@@ -7,10 +7,11 @@ function modeApply(input){
     sketch.innerHTML="";
     for(let i=0;i<input*input;i++){
         const squareDiv=document.createElement("div");
+        squareDiv.setAttribute("class","squareDiv");
         if(netMode.textContent==="Net:On"){
-            squareDiv.setAttribute("class","squareDivBorder");
+            console.log(netMode.textContent)
+            squareDiv.classList.add("squareDivBorder");
         }
-        squareDiv.setAttribute("class","squareDiv")
         squareDiv.style.width=`${(1000-2)/input}px`;
         squareDiv.style.height=`${(500-2)/input}px`;
         sketch.appendChild(squareDiv)
@@ -36,7 +37,28 @@ function netModeChanging(){
 
    }
    
-   
+   function paintColor(color){
+    let isMouseDown=false;
+    const squareDivEntities=document.querySelectorAll(".squareDiv");
+    squareDivEntities.forEach(div=>{
+        div.onclick=function(){
+            div.style.backgroundColor=color;
+        }
+        div.addEventListener("mousedown",function(){
+            isMouseDown=true;
+            div.style.backgroundColor=color;
+        })
+        div.addEventListener("mouseover",function(){
+            if(isMouseDown){
+                div.style.backgroundColor=color;
+            }
+        })
+        div.addEventListener("mouseup",function(){
+            isMouseDown=false;
+        })
+    })
+    
+   }
 
 modeApply(16);
 modeChanging();
@@ -44,65 +66,77 @@ clearOut();
 colorBrushChanging();
 
 function colorBrushChanging() {
-    let isMouseDown = false; // Tracks whether the mouse is held down
     const squareDivEntities = document.querySelectorAll(".squareDiv");
     const brushes = document.querySelectorAll(".brush"); // Assuming brushes are elements with a class 'brush'
+    const brushBoard=document.querySelector(".brushBoard");
+    const brushValue=document.querySelector(".brushValue");
+    brushBoard.addEventListener("input",function(){
+        let selectedColor=brushBoard.value;
+        brushValue.textContent=`${selectedColor}`;
+        const brushColor=brushValue.textContent;
+        paintColor(brushColor);
+    })
 
     brushes.forEach((brush) => {
-        brush.style.opacity = "0.8";
-
+        
         brush.onclick = function () {
-            const brushColor = brush.textContent; // Get the color from the brush's text content
+            brush.style.opacity="0.75";
            
-                squareDivEntities.forEach((squareDiv) => {
-                    if(brushColor!="Eraser"){
-                    // Change color on click
-                    squareDiv.onclick = function () {
-                        squareDiv.style.backgroundColor = brushColor;
-                    };
+            const brushColor = brush.textContent; // Get the color from the brush's text content
+            if(brushColor!="Eraser"){
+                paintColor(brushColor);
+            }else{
+                paintColor("white");
+            }
+    //             squareDivEntities.forEach((squareDiv) => {
+    //                 if(brushColor!="Eraser"){
+    //                 // Change color on click
+    //                 squareDiv.onclick = function () {
+    //                     squareDiv.style.backgroundColor = brushColor;
+    //                 };
 
-                    // Change color on mousedown
-                    squareDiv.addEventListener("mousedown", function () {
-                        isMouseDown = true;
-                        squareDiv.style.backgroundColor = brushColor;
-                    });
+    //                 // Change color on mousedown
+    //                 squareDiv.addEventListener("mousedown", function () {
+    //                     isMouseDown = true;
+    //                     squareDiv.style.backgroundColor = brushColor;
+    //                 });
 
-                    // Change color on mouseover when mousedown is true
-                    squareDiv.addEventListener("mouseover", function () {
-                        if (isMouseDown) {
-                            squareDiv.style.backgroundColor = brushColor;
-                }
-                });
-                }else{
-                       // Change color on click
-                       squareDiv.onclick = function () {
-                        squareDiv.style.backgroundColor = "white";
-                    };
+    //                 // Change color on mouseover when mousedown is true
+    //                 squareDiv.addEventListener("mouseover", function () {
+    //                     if (isMouseDown) {
+    //                         squareDiv.style.backgroundColor = brushColor;
+    //             }
+    //             });
+    //             }else{
+    //                    // Change color on click
+    //                    squareDiv.onclick = function () {
+    //                     squareDiv.style.backgroundColor = "white";
+    //                 };
     
-                    // Change color on mousedown
-                    squareDiv.addEventListener("mousedown", function () {
-                        isMouseDown = true;
-                        squareDiv.style.backgroundColor = "white";
-                    });
+    //                 // Change color on mousedown
+    //                 squareDiv.addEventListener("mousedown", function () {
+    //                     isMouseDown = true;
+    //                     squareDiv.style.backgroundColor = "white";
+    //                 });
     
-                    // Change color on mouseover when mousedown is true
-                    squareDiv.addEventListener("mouseover", function () {
-                        if (isMouseDown) {
-                            squareDiv.style.backgroundColor = "white";
-                        }
-                    });
-                }
+    //                 // Change color on mouseover when mousedown is true
+    //                 squareDiv.addEventListener("mouseover", function () {
+    //                     if (isMouseDown) {
+    //                         squareDiv.style.backgroundColor = "white";
+    //                     }
+    //                 });
+    //             }
                  
-                });
+    //             });
     
-                // Reset isMouseDown when mouse is released
-                document.addEventListener("mouseup", function () {
-                    isMouseDown = false;
-                });
+    //             // Reset isMouseDown when mouse is released
+    //             document.addEventListener("mouseup", function () {
+    //                 isMouseDown = false;
+    //             });
             
           
         };
-    });
+     });
 }
 
     
